@@ -46,7 +46,7 @@
     {
       "Effect": "Allow",
       "Action": "sns:Publish",
-      "Resource": "arn:aws:sns:${region}:${account}:${env}-${region_short_name}-wallet-temp_paze_sre_alarms"
+      "Resource": "arn:aws:sns:${region}:${account}:${env}-${region_short_name}-wallet-temp_sre_sre_alarms"
     },
     {
       "Effect": "Allow",

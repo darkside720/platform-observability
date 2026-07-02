@@ -48,35 +48,35 @@ variable "expiry_date" {
 
 # Module parameters
 
-variable "temp_sns_topic_paze_sre_alarms" {
+variable "temp_sns_topic_sre_sre_alarms" {
   type = object({
     name         = string
     display_name = string
   })
   default = {
-    name         = "temp_paze_sre_alarms"
-    display_name = "PAZE SRE AWS Alert"
+    name         = "temp_sre_sre_alarms"
+    display_name = "SRE SRE AWS Alert"
   }
 }
-variable "sns_topic_paze_sre_alarms" {
+variable "sns_topic_sre_sre_alarms" {
   type = object({
     name         = string
     display_name = string
   })
   default = {
-    name         = "paze_sre_alarms"
-    display_name = "Paze SRE Alarms"
+    name         = "sre_sre_alarms"
+    display_name = "Sre SRE Alarms"
   }
 }
 
-variable "sns_topic_paze_orchestration_team_endpoint" {
+variable "sns_topic_sre_orchestration_team_endpoint" {
   type = object({
     name         = string
     display_name = string
   })
   default = {
-    name         = "paze_orchestration_team_endpoint"
-    display_name = "Paze Orchestration Team Alarms"
+    name         = "sre_orchestration_team_endpoint"
+    display_name = "Sre Orchestration Team Alarms"
   }
 }
 variable "container_ids" {
@@ -110,7 +110,7 @@ variable "endpoint" {
   default = ""
 }
 
-variable "sns_subscription_paze_orchestration_team_endpoint" {
+variable "sns_subscription_sre_orchestration_team_endpoint" {
   description = "Configuration for the SNS subscription"
   type = object({
     protocol = string
@@ -118,11 +118,11 @@ variable "sns_subscription_paze_orchestration_team_endpoint" {
   })
   default = {
     protocol = "email"
-    endpoint = "paze-orchestration-team@earlywarning.com"
+    endpoint = "sre-orchestration-team@earlywarning.com"
   }
 }
 
-variable "sns_subscription_paze_sre_alarms" {
+variable "sns_subscription_sre_sre_alarms" {
   description = "Configuration for the SNS subscription"
   type = object({
     protocol = string
@@ -133,7 +133,7 @@ variable "sns_subscription_paze_sre_alarms" {
     endpoint = "wallet_pd_alerting@earlywarning.pagerduty.com"
   }
 }
-variable "temp_sns_subscription_paze_sre_alarms" {
+variable "temp_sns_subscription_sre_sre_alarms" {
   description = "Configuration for the SNS subscription"
   type = object({
     protocol = string
@@ -141,7 +141,7 @@ variable "temp_sns_subscription_paze_sre_alarms" {
   })
   default = {
     protocol = "email"
-    endpoint = "paze-sre@earlywarning.com"
+    endpoint = "sre-sre@earlywarning.com"
   }
 }
 

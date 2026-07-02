@@ -24,5 +24,5 @@ module "sre_cloudwatch_alert" {
   threshold           = each.value.threshold
   unit                = each.value.unit
   dimensions          = each.value.dimensions
-  alarm_actions       = [ module.temp_sns_topic_paze_sre_alarms.arn ]
+  alarm_actions       = [ module.temp_sns_topic_sre_sre_alarms.arn ]
 }

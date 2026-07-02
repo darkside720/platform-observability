@@ -106,7 +106,7 @@ locals {
 
   alarm_description = each.value.alarm_description
   alarm_actions     = [
-    module.temp_sns_topic_paze_sre_alarms.arn
+    module.temp_sns_topic_sre_sre_alarms.arn
   ]
 }
 

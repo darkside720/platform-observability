@@ -2,21 +2,21 @@
 some_value: null
 
 dynamodb_tables:
-  prodpaze-mesh-org-ddb:
+  prodsre-mesh-org-ddb:
     ConsumedReadCapacityUnits: 200
     ConsumedWriteCapacityUnits: 180
     ThrottledRequests: 20
     ReadThrottleEvents: 8
     WriteThrottleEvents: 8
 
-  prodpaze-mesh-wallet-merchants-ddb:
+  prodsre-mesh-wallet-merchants-ddb:
     ConsumedReadCapacityUnits: 130
     ConsumedWriteCapacityUnits: 140
     ThrottledRequests: 18
     ReadThrottleEvents: 9
     WriteThrottleEvents: 9
 
-  prodpaze-mesh-wallet-salt-ddb:
+  prodsre-mesh-wallet-salt-ddb:
     ConsumedReadCapacityUnits: 90
     ConsumedWriteCapacityUnits: 100
     ThrottledRequests: 11
@@ -24,42 +24,42 @@ dynamodb_tables:
     WriteThrottleEvents: 6
 
   # Newly added tables
-  prodpaze-wallet-merchant-fls-qualification-ddb:
+  prodsre-wallet-merchant-fls-qualification-ddb:
     ConsumedReadCapacityUnits: 100
     ConsumedWriteCapacityUnits: 120
     ThrottledRequests: 12
     ReadThrottleEvents: 5
     WriteThrottleEvents: 5
 
-  prodpaze-wallet-merchant-network-name-ddb:
+  prodsre-wallet-merchant-network-name-ddb:
     ConsumedReadCapacityUnits: 110
     ConsumedWriteCapacityUnits: 130
     ThrottledRequests: 14
     ReadThrottleEvents: 6
     WriteThrottleEvents: 6
 
-  prodpaze-wallet-merchant-network-mid-ddb:
+  prodsre-wallet-merchant-network-mid-ddb:
     ConsumedReadCapacityUnits: 90
     ConsumedWriteCapacityUnits: 100
     ThrottledRequests: 10
     ReadThrottleEvents: 4
     WriteThrottleEvents: 4
   
-  prodpaze-wallet-fls-eligible-transactions-ddb:
+  prodsre-wallet-fls-eligible-transactions-ddb:
     ConsumedReadCapacityUnits: 90
     ConsumedWriteCapacityUnits: 100
     ThrottledRequests: 10
     ReadThrottleEvents: 4
     WriteThrottleEvents: 4
 
-  prodpaze-wallet-merchant-key-ddb:
+  prodsre-wallet-merchant-key-ddb:
     ConsumedReadCapacityUnits: 85
     ConsumedWriteCapacityUnits: 95
     ThrottledRequests: 9
     ReadThrottleEvents: 3
     WriteThrottleEvents: 3
 
-  prodpaze-wallet-mobile-checkout-sessions-ddb:
+  prodsre-wallet-mobile-checkout-sessions-ddb:
     ConsumedReadCapacityUnits: 100
     ConsumedWriteCapacityUnits: 120
     ThrottledRequests: 12
@@ -67,63 +67,63 @@ dynamodb_tables:
     WriteThrottleEvents: 5
 
   # Newly added tables
-  prodpaze-wallet-device-attempts-ddb:
+  prodsre-wallet-device-attempts-ddb:
     ConsumedReadCapacityUnits: 100
     ConsumedWriteCapacityUnits: 120
     ThrottledRequests: 12
     ReadThrottleEvents: 5
     WriteThrottleEvents: 5
 
-  prodpaze-wallet-appeals-ddb:
+  prodsre-wallet-appeals-ddb:
     ConsumedReadCapacityUnits: 100
     ConsumedWriteCapacityUnits: 120
     ThrottledRequests: 12
     ReadThrottleEvents: 5
     WriteThrottleEvents: 5
 
-  prodpaze-wallet-bank-claims-ddb:
+  prodsre-wallet-bank-claims-ddb:
     ConsumedReadCapacityUnits: 100
     ConsumedWriteCapacityUnits: 120
     ThrottledRequests: 12
     ReadThrottleEvents: 5
     WriteThrottleEvents: 5
 
-  prodpaze-wallet-authentication-events-ddb:
+  prodsre-wallet-authentication-events-ddb:
     ConsumedReadCapacityUnits: 100
     ConsumedWriteCapacityUnits: 120
     ThrottledRequests: 12
     ReadThrottleEvents: 5
     WriteThrottleEvents: 5
 
-  prodpaze-wallet-verification-codes-ddb:
+  prodsre-wallet-verification-codes-ddb:
     ConsumedReadCapacityUnits: 100
     ConsumedWriteCapacityUnits: 120
     ThrottledRequests: 12
     ReadThrottleEvents: 5
     WriteThrottleEvents: 5
 
-  prodpaze-wallet-wms-sessions-ddb:
+  prodsre-wallet-wms-sessions-ddb:
     ConsumedReadCapacityUnits: 100
     ConsumedWriteCapacityUnits: 120
     ThrottledRequests: 12
     ReadThrottleEvents: 5
     WriteThrottleEvents: 5
 
-  prodpaze-wallet-terms-ddb:
+  prodsre-wallet-terms-ddb:
     ConsumedReadCapacityUnits: 100
     ConsumedWriteCapacityUnits: 120
     ThrottledRequests: 12
     ReadThrottleEvents: 5
     WriteThrottleEvents: 5
 
-  prodpaze-wallet-fraud-transaction-summary-ddb:
+  prodsre-wallet-fraud-transaction-summary-ddb:
     ConsumedReadCapacityUnits: 100
     ConsumedWriteCapacityUnits: 120
     ThrottledRequests: 12
     ReadThrottleEvents: 5
     WriteThrottleEvents: 5
 
-  prodpaze-wallet-fraud-transactions-ddb:
+  prodsre-wallet-fraud-transactions-ddb:
     ConsumedReadCapacityUnits: 100
     ConsumedWriteCapacityUnits: 120
     ThrottledRequests: 12
@@ -134,49 +134,49 @@ dynamodb_tables:
 # Cloudwatch Route53 Health Checks
 # r53_health_checks:
 #   - name: "b2b-east"
-#     fqdn: "b2b-east.wallet.prodpaze.earlywarning.io"
+#     fqdn: "b2b-east.wallet.prodsre.earlywarning.io"
 #     protocol_type: "HTTPS"
 #     request_interval: 30
 #     failure_threshold: 3
 #     port: 443
 #     resource_path: "/"
 #   - name: "mtls-issuer-east"
-#     fqdn: "mtls.issuer-east.wallet.prodpaze.earlywarning.io"
+#     fqdn: "mtls.issuer-east.wallet.prodsre.earlywarning.io"
 #     protocol_type: "HTTPS"
 #     request_interval: 30
 #     failure_threshold: 3
 #     port: 443
 #     resource_path: "/"
 #   - name: "issuer-east"
-#     fqdn: "issuer-east.wallet.prodpaze.earlywarning.io"
+#     fqdn: "issuer-east.wallet.prodsre.earlywarning.io"
 #     protocol_type: "HTTPS"
 #     request_interval: 30
 #     failure_threshold: 3
 #     port: 443
 #     resource_path: "/"
 #   - name: "auth-east"
-#     fqdn: "auth-east.wallet.prodpaze.earlywarning.io"
+#     fqdn: "auth-east.wallet.prodsre.earlywarning.io"
 #     protocol_type: "HTTPS"
 #     request_interval: 30
 #     failure_threshold: 3
 #     port: 443
 #     resource_path: "/"
 #   - name: "mywallet-management-east"
-#     fqdn: "mywallet-management-east.wallet.prodpaze.earlywarning.io"
+#     fqdn: "mywallet-management-east.wallet.prodsre.earlywarning.io"
 #     protocol_type: "HTTPS"
 #     request_interval: 30
 #     failure_threshold: 3
 #     port: 443
 #     resource_path: "/"
 #   - name: "mtls-b2b-east"
-#     fqdn: "mtls.b2b-east.wallet.prodpaze.earlywarning.io"
+#     fqdn: "mtls.b2b-east.wallet.prodsre.earlywarning.io"
 #     protocol_type: "HTTPS"
 #     request_interval: 30
 #     failure_threshold: 3
 #     port: 443
 #     resource_path: "/"
 #   - name: "mtls-auth-east"
-#     fqdn: "mtls.auth-east.wallet.prodpaze.earlywarning.io"
+#     fqdn: "mtls.auth-east.wallet.prodsre.earlywarning.io"
 #     protocol_type: "HTTPS"
 #     request_interval: 30
 #     failure_threshold: 3
@@ -186,7 +186,7 @@ dynamodb_tables:
 
 # Kinesis Metrics Monitoring
 kinesis_streams:
-  - name: "prodpaze-use1-wallet-analytics-kds"
+  - name: "prodsre-use1-wallet-analytics-kds"
     metrics:
       - metric_name: "GetRecords.Bytes"
         statistic: "Sum"
@@ -224,7 +224,7 @@ kinesis_streams:
         statistic: "Average"
         threshold: 10  # Threshold for throughput exceeded
         comparison_operator: "GreaterThanThreshold"
-  - name: "prodpaze-use1-wallet-business-event-stream"
+  - name: "prodsre-use1-wallet-business-event-stream"
     metrics:
       - metric_name: "GetRecords.Bytes"
         statistic: "Sum"
@@ -262,7 +262,7 @@ kinesis_streams:
         statistic: "Average"
         threshold: 10  # Threshold for throughput exceeded
         comparison_operator: "GreaterThanThreshold"
-  - name: "prodpaze-use1-wallet-event-stream"
+  - name: "prodsre-use1-wallet-event-stream"
     metrics:
       - metric_name: "GetRecords.Bytes"
         statistic: "Sum"
@@ -300,7 +300,7 @@ kinesis_streams:
         statistic: "Average"
         threshold: 10  # Threshold for throughput exceeded
         comparison_operator: "GreaterThanThreshold"
-  - name: "prodpaze-use1-wallet-input-stream"
+  - name: "prodsre-use1-wallet-input-stream"
     metrics:
       - metric_name: "GetRecords.Bytes"
         statistic: "Sum"

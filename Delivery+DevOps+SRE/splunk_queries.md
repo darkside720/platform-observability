@@ -127,25 +127,25 @@ Query to filter getwalletdetails and or tokenupdates
 
  
 
-PAZE - Infra Health Status Checks
+SRE - Infra Health Status Checks
 
  
 
-| inputlookup paze.csv
+| inputlookup sre.csv
 | eval host=Instance+"-"+InstanceID
 | eval host=replace(host,"_","-")
 | where Env="PROD" AND InstanceType="mesh-session_processor"
 | join type=left host
-    [ search index=mesh-wallet-r host="prodpaze-us*" SipPlugin "App SENT" sourcetype=SessionProcessor Root "sip:monitorsp" sipHttp="SIP/2.0 200 OK"
+    [ search index=mesh-wallet-r host="prodsre-us*" SipPlugin "App SENT" sourcetype=SessionProcessor Root "sip:monitorsp" sipHttp="SIP/2.0 200 OK"
     | stats count as Success_count by host
     | table host, Success_count]
 | eval Success_count=coalesce(Success_count,0)
-| join type=left host [search index=mesh-wallet-r host="prodpaze-us*" SipPlugin "App SENT" sourcetype=SessionProcessor Root "sip:monitorsp" sipHttp!="SIP/2.0 200 OK"
+| join type=left host [search index=mesh-wallet-r host="prodsre-us*" SipPlugin "App SENT" sourcetype=SessionProcessor Root "sip:monitorsp" sipHttp!="SIP/2.0 200 OK"
     | stats count as Error_count by host
     | table host,Error_count
 ]
 | eval Error_count=coalesce(Error_count,0)
-| join type=left host [search index=mesh-wallet-r host="prodpaze-us*" SipPlugin "App RECEIVED" sourcetype=SessionProcessor Root "sip:monitorsp"
+| join type=left host [search index=mesh-wallet-r host="prodsre-us*" SipPlugin "App RECEIVED" sourcetype=SessionProcessor Root "sip:monitorsp"
     | stats count as Request_count by host
     | table host,Request_count
 ]

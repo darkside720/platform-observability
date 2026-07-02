@@ -585,7 +585,7 @@ dashboard_updater_lambda:
   security_groups: [ "cat-usw2-infrastructure" ]
   environment_variables:
     DASHBOARD_NAME: "cat-usw2-wallet-wallet-dynamodb_tables_dashboard"
-    SNS_TOPIC_ARN: "arn:aws:sns:us-west-2:822042263602:cat-usw2-wallet-temp_paze_sre_alarms"
+    SNS_TOPIC_ARN: "arn:aws:sns:us-west-2:822042263602:cat-usw2-wallet-temp_sre_sre_alarms"
     AWS_ACCOUNT_ID: "822042263602" 
 
   log_group:

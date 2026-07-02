@@ -528,7 +528,7 @@ dashboard_updater_lambda:
   security_groups: [ "qa-usw2-infrastructure" ]
   environment_variables:
     DASHBOARD_NAME: "qa-usw2-wallet-wallet-dynamodb_tables_dashboard"
-    SNS_TOPIC_ARN: "arn:aws:sns:us-west-2:247364876154:qa-usw2-wallet-temp_paze_sre_alarms"
+    SNS_TOPIC_ARN: "arn:aws:sns:us-west-2:247364876154:qa-usw2-wallet-temp_sre_sre_alarms"
     AWS_ACCOUNT_ID: "247364876154" 
 
   log_group:

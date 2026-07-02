@@ -144,6 +144,6 @@ module "kinesis_metric_alarms" {
 
 #   alarm_description = each.value.alarm_description
 #   alarm_actions     = [
-#     module.sns_topic_paze_sre_alarms.arn
+#     module.sns_topic_sre_sre_alarms.arn
 #   ]
 }

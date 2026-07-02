@@ -24,8 +24,8 @@ Checking URL: https://mywallet-management.wallet.cat.earlywarning.io
 Checking URL: https://mywallet-management-east.wallet.cat.earlywarning.io
 | CAT EAST | https://mywallet-management-east.wallet.cat.earlywarning.io | UP |
 Processing Region: PROD
-Checking URL: https://mywallet.paze.com
-| PROD | https://mywallet.paze.com | UP |
+Checking URL: https://mywallet.sre.com
+| PROD | https://mywallet.sre.com | UP |
 Checking URL: https://issuer.wallet.earlywarning.com/monitorsp
 | PROD | https://issuer.wallet.earlywarning.com/monitorsp | UP |
 Checking URL: https://b2b.wallet.earlywarning.com/monitorsp

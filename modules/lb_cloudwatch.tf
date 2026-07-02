@@ -47,7 +47,7 @@ module "site_manager_nlb_metric_alarm" {
 
   alarm_description = local.nlb_metrices[count.index].alarm_description
   alarm_actions     = [
-    module.sns_topic_paze_sre_alarms.arn, 
+    module.sns_topic_sre_sre_alarms.arn, 
     data.aws_sns_topic.itops_alarms.arn
     ]
 }
@@ -86,7 +86,7 @@ module "web_proxy_nlb_metric_alarm" {
 
   alarm_description = local.nlb_metrices[count.index].alarm_description
   alarm_actions     = [
-    module.sns_topic_paze_sre_alarms.arn, 
+    module.sns_topic_sre_sre_alarms.arn, 
     data.aws_sns_topic.itops_alarms.arn
     ]
 }

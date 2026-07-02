@@ -58,7 +58,7 @@ module "sqs_card_notification_alarm_outbound_queue" {
 
   alarm_description = each.value.alarm_description
   alarm_actions     = [
-    module.temp_sns_topic_paze_sre_alarms.arn,
+    module.temp_sns_topic_sre_sre_alarms.arn,
     data.aws_sns_topic.itops_alarms.arn
   ]
 }
@@ -96,7 +96,7 @@ module "sqs_card_notification_alarm_issuer_events_queue" {
 
   alarm_description = each.value.alarm_description
   alarm_actions     = [
-    module.temp_sns_topic_paze_sre_alarms.arn,
+    module.temp_sns_topic_sre_sre_alarms.arn,
     data.aws_sns_topic.itops_alarms.arn
   ]
 }

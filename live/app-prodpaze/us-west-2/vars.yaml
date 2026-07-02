@@ -16,7 +16,7 @@ s3_sre_operational_bucket:
 s3_sre_operational_bucket_key:
   description: "wallet-sre-operational-s3-assets-key"
   deletion_window_in_days: 10
-  alias_name: "prodpaze-usw2-wallet-wallet-sre-operational-s3-bucket-key"
+  alias_name: "prodsre-usw2-wallet-wallet-sre-operational-s3-bucket-key"
   multi_region: true
   policy_shared: false
 
@@ -38,7 +38,7 @@ s3_duplicate_wallet_query_results_bucket:
 s3_duplicate_wallet_query_results_bucket_key:
   description: "wallet-sre-query-results-s3-bucket-key"
   deletion_window_in_days: 10
-  alias_name: "prodpaze-usw2-wallet-wallet-sre-query-results-s3-bucket-key"
+  alias_name: "prodsre-usw2-wallet-wallet-sre-query-results-s3-bucket-key"
   multi_region: true
   policy_shared: false
 
@@ -52,11 +52,11 @@ observability_check_lambda:
   subnet_name: "app"
   memory: 512
   timeout: 900
-  security_groups: [ "prodpaze-usw2-infrastructure" ]
+  security_groups: [ "prodsre-usw2-infrastructure" ]
   environment_variables:
     SPLUNK_HEC_TOKEN: c76b71f0-24e8-424a-a716-482ab343bdc9
     SPLUNK_HEC_URL: https://prodtools-splunk-heavy-forwarder.ews.int:8088/services/collector/event
-    SPLUNK_INDEX: aws-prodpaze
+    SPLUNK_INDEX: aws-prodsre
   log_group:
     name: "/aws/lambda/"
     retention_in_days: 90
@@ -65,8 +65,8 @@ observability_check_lambda:
   role:
     name: sre-observability-lambda-exec-role
     description: "sre lambda observability check execution role"
-    iam_policy_s3_keys: [ "svc-prodpaze-usw2-wallet-sre-observability-check-lambda-policy" ]
-    assume_role_json_file: svc-prodpaze-usw2-wallet-sre-observability-check-lambda-assume-policy
+    iam_policy_s3_keys: [ "svc-prodsre-usw2-wallet-sre-observability-check-lambda-policy" ]
+    assume_role_json_file: svc-prodsre-usw2-wallet-sre-observability-check-lambda-assume-policy
     additional_policy_arns: [ "arn:aws:iam::aws:policy/AmazonEC2FullAccess" ]
 
 # lambda to collect the logs and stream to splunk tool
@@ -79,11 +79,11 @@ logsmonitor_lambda:
   subnet_name: "app"
   memory: 512
   timeout: 900
-  security_groups: [ "prodpaze-usw2-infrastructure" ]
+  security_groups: [ "prodsre-usw2-infrastructure" ]
   environment_variables:
     SPLUNK_HEC_TOKEN: c76b71f0-24e8-424a-a716-482ab343bdc9
     SPLUNK_HEC_URL: https://prodtools-splunk-heavy-forwarder.ews.int:8088/services/collector/event
-    SPLUNK_INDEX: aws-prodpaze
+    SPLUNK_INDEX: aws-prodsre
   log_group:
     name: "/aws/lambda/"
     retention_in_days: 90
@@ -92,16 +92,16 @@ logsmonitor_lambda:
   role:
     name: sre-lambda-splunk-logging-exec-role
     description: "sre lambda splunk logging execution role"
-    iam_policy_s3_keys: [ "svc-prodpaze-usw2-wallet-sre-lambda-logs-policy" ]
-    assume_role_json_file: svc-prodpaze-usw2-wallet-sre-lambda-logs-assume-policy
+    iam_policy_s3_keys: [ "svc-prodsre-usw2-wallet-sre-lambda-logs-policy" ]
+    assume_role_json_file: svc-prodsre-usw2-wallet-sre-lambda-logs-assume-policy
     additional_policy_arns: [ "arn:aws:iam::aws:policy/AmazonEC2FullAccess" ]
 
 logsmonitor_lambdaoutput_subscriptions:
   name: "sre-lambda-output-splunk-logging"
   role_arn: null
-  log_group_name: "/aws/lambda/prodpaze-usw2-wallet-sre-observability-check-lambda"
+  log_group_name: "/aws/lambda/prodsre-usw2-wallet-sre-observability-check-lambda"
   filter_pattern: ""
-  # destination_arn: "arn:aws:lambda:us-west-2:289434761907:function:prodpaze-usw2-wallet-sre-lambda-logs-to-splunk-logging"
+  # destination_arn: "arn:aws:lambda:us-west-2:289434761907:function:prodsre-usw2-wallet-sre-lambda-logs-to-splunk-logging"
   distribution: null
 
 # Event Bridge details
@@ -111,8 +111,8 @@ cloudwatch_event_iam_sre_role:
   name: "sre-event-bridge-role"
   description: "sre wallet event bridge role"
   iam_policy_s3_keys:
-    - "svc-prodpaze-usw2-wallet-sre-event-bridge-policy"
-  assume_role_json_file: "svc-prodpaze-usw2-wallet-sre-event-bridge-assume-policy"
+    - "svc-prodsre-usw2-wallet-sre-event-bridge-policy"
+  assume_role_json_file: "svc-prodsre-usw2-wallet-sre-event-bridge-assume-policy"
 
 eventbridge-scheduler-sre:
   name: "sre-observability-check-eb-rule"
@@ -121,28 +121,28 @@ eventbridge-scheduler-sre:
   flexible_time_window:
     mode: "OFF"
   # target:
-  #   arn: "arn:aws:lambda:us-west-2:289434761907:function:prodpaze-usw2-wallet-sre-observability-check-lambda"
-  #   role_arn: "arn:aws:iam::289434761907:role/svc-prodpaze-usw2-wallet-sre-event-bridge-role"
-  #   input": "{\"FunctionName\": \"arn:aws:lambda:us-west-2:289434761907:function:prodpaze-usw2-wallet-sre-observability-check-lambda\",  \"InvocationType\": \"Event\", \"Payload\": \"\"}"
+  #   arn: "arn:aws:lambda:us-west-2:289434761907:function:prodsre-usw2-wallet-sre-observability-check-lambda"
+  #   role_arn: "arn:aws:iam::289434761907:role/svc-prodsre-usw2-wallet-sre-event-bridge-role"
+  #   input": "{\"FunctionName\": \"arn:aws:lambda:us-west-2:289434761907:function:prodsre-usw2-wallet-sre-observability-check-lambda\",  \"InvocationType\": \"Event\", \"Payload\": \"\"}"
 
 some_value: null
 
 dynamodb_tables:
-  prodpaze-mesh-org-ddb:
+  prodsre-mesh-org-ddb:
     ConsumedReadCapacityUnits: 200
     ConsumedWriteCapacityUnits: 180
     ThrottledRequests: 20
     ReadThrottleEvents: 8
     WriteThrottleEvents: 8
 
-  prodpaze-mesh-wallet-merchants-ddb:
+  prodsre-mesh-wallet-merchants-ddb:
     ConsumedReadCapacityUnits: 130
     ConsumedWriteCapacityUnits: 140
     ThrottledRequests: 18
     ReadThrottleEvents: 9
     WriteThrottleEvents: 9
 
-  prodpaze-mesh-wallet-salt-ddb:
+  prodsre-mesh-wallet-salt-ddb:
     ConsumedReadCapacityUnits: 90
     ConsumedWriteCapacityUnits: 100
     ThrottledRequests: 11
@@ -150,42 +150,42 @@ dynamodb_tables:
     WriteThrottleEvents: 6
 
   # Newly added tables
-  prodpaze-wallet-merchant-fls-qualification-ddb:
+  prodsre-wallet-merchant-fls-qualification-ddb:
     ConsumedReadCapacityUnits: 100
     ConsumedWriteCapacityUnits: 120
     ThrottledRequests: 12
     ReadThrottleEvents: 5
     WriteThrottleEvents: 5
 
-  prodpaze-wallet-merchant-network-name-ddb:
+  prodsre-wallet-merchant-network-name-ddb:
     ConsumedReadCapacityUnits: 110
     ConsumedWriteCapacityUnits: 130
     ThrottledRequests: 14
     ReadThrottleEvents: 6
     WriteThrottleEvents: 6
 
-  prodpaze-wallet-merchant-network-mid-ddb:
+  prodsre-wallet-merchant-network-mid-ddb:
     ConsumedReadCapacityUnits: 90
     ConsumedWriteCapacityUnits: 100
     ThrottledRequests: 10
     ReadThrottleEvents: 4
     WriteThrottleEvents: 4
   
-  prodpaze-wallet-fls-eligible-transactions-ddb:
+  prodsre-wallet-fls-eligible-transactions-ddb:
     ConsumedReadCapacityUnits: 90
     ConsumedWriteCapacityUnits: 100
     ThrottledRequests: 10
     ReadThrottleEvents: 4
     WriteThrottleEvents: 4
 
-  prodpaze-wallet-merchant-key-ddb:
+  prodsre-wallet-merchant-key-ddb:
     ConsumedReadCapacityUnits: 85
     ConsumedWriteCapacityUnits: 95
     ThrottledRequests: 9
     ReadThrottleEvents: 3
     WriteThrottleEvents: 3
 
-  prodpaze-wallet-mobile-checkout-sessions-ddb:
+  prodsre-wallet-mobile-checkout-sessions-ddb:
     ConsumedReadCapacityUnits: 100
     ConsumedWriteCapacityUnits: 120
     ThrottledRequests: 12
@@ -193,63 +193,63 @@ dynamodb_tables:
     WriteThrottleEvents: 5
 
   # Newly added tables
-  prodpaze-wallet-device-attempts-ddb:
+  prodsre-wallet-device-attempts-ddb:
     ConsumedReadCapacityUnits: 100
     ConsumedWriteCapacityUnits: 120
     ThrottledRequests: 12
     ReadThrottleEvents: 5
     WriteThrottleEvents: 5
 
-  prodpaze-wallet-appeals-ddb:
+  prodsre-wallet-appeals-ddb:
     ConsumedReadCapacityUnits: 100
     ConsumedWriteCapacityUnits: 120
     ThrottledRequests: 12
     ReadThrottleEvents: 5
     WriteThrottleEvents: 5
 
-  prodpaze-wallet-bank-claims-ddb:
+  prodsre-wallet-bank-claims-ddb:
     ConsumedReadCapacityUnits: 100
     ConsumedWriteCapacityUnits: 120
     ThrottledRequests: 12
     ReadThrottleEvents: 5
     WriteThrottleEvents: 5
 
-  prodpaze-wallet-authentication-events-ddb:
+  prodsre-wallet-authentication-events-ddb:
     ConsumedReadCapacityUnits: 100
     ConsumedWriteCapacityUnits: 120
     ThrottledRequests: 12
     ReadThrottleEvents: 5
     WriteThrottleEvents: 5
 
-  prodpaze-wallet-verification-codes-ddb:
+  prodsre-wallet-verification-codes-ddb:
     ConsumedReadCapacityUnits: 100
     ConsumedWriteCapacityUnits: 120
     ThrottledRequests: 12
     ReadThrottleEvents: 5
     WriteThrottleEvents: 5
 
-  prodpaze-wallet-wms-sessions-ddb:
+  prodsre-wallet-wms-sessions-ddb:
     ConsumedReadCapacityUnits: 100
     ConsumedWriteCapacityUnits: 120
     ThrottledRequests: 12
     ReadThrottleEvents: 5
     WriteThrottleEvents: 5
 
-  prodpaze-wallet-terms-ddb:
+  prodsre-wallet-terms-ddb:
     ConsumedReadCapacityUnits: 100
     ConsumedWriteCapacityUnits: 120
     ThrottledRequests: 12
     ReadThrottleEvents: 5
     WriteThrottleEvents: 5
 
-  prodpaze-wallet-fraud-transaction-summary-ddb:
+  prodsre-wallet-fraud-transaction-summary-ddb:
     ConsumedReadCapacityUnits: 100
     ConsumedWriteCapacityUnits: 120
     ThrottledRequests: 12
     ReadThrottleEvents: 5
     WriteThrottleEvents: 5
 
-  prodpaze-wallet-fraud-transactions-ddb:
+  prodsre-wallet-fraud-transactions-ddb:
     ConsumedReadCapacityUnits: 100
     ConsumedWriteCapacityUnits: 120
     ThrottledRequests: 12
@@ -260,49 +260,49 @@ dynamodb_tables:
 # Cloudwatch Route53 Health Checks
 # r53_health_checks:
 #   - name: "b2b-west"
-#     fqdn: "b2b-west.wallet.prodpaze.earlywarning.io"
+#     fqdn: "b2b-west.wallet.prodsre.earlywarning.io"
 #     protocol_type: "HTTPS"
 #     request_interval: 30
 #     failure_threshold: 3
 #     port: 443
 #     resource_path: "/"
 #   - name: "mtls-issuer-west"
-#     fqdn: "mtls.issuer-west.wallet.prodpaze.earlywarning.io"
+#     fqdn: "mtls.issuer-west.wallet.prodsre.earlywarning.io"
 #     protocol_type: "HTTPS"
 #     request_interval: 30
 #     failure_threshold: 3
 #     port: 443
 #     resource_path: "/"
 #   - name: "issuer-west"
-#     fqdn: "issuer-west.wallet.prodpaze.earlywarning.io"
+#     fqdn: "issuer-west.wallet.prodsre.earlywarning.io"
 #     protocol_type: "HTTPS"
 #     request_interval: 30
 #     failure_threshold: 3
 #     port: 443
 #     resource_path: "/"
 #   - name: "auth-west"
-#     fqdn: "auth-west.wallet.prodpaze.earlywarning.io"
+#     fqdn: "auth-west.wallet.prodsre.earlywarning.io"
 #     protocol_type: "HTTPS"
 #     request_interval: 30
 #     failure_threshold: 3
 #     port: 443
 #     resource_path: "/"
 #   - name: "mywallet-management-west"
-#     fqdn: "mywallet-management-west.wallet.prodpaze.earlywarning.io"
+#     fqdn: "mywallet-management-west.wallet.prodsre.earlywarning.io"
 #     protocol_type: "HTTPS"
 #     request_interval: 30
 #     failure_threshold: 3
 #     port: 443
 #     resource_path: "/"
 #   - name: "mtls-b2b-west"
-#     fqdn: "mtls.b2b-west.wallet.prodpaze.earlywarning.io"
+#     fqdn: "mtls.b2b-west.wallet.prodsre.earlywarning.io"
 #     protocol_type: "HTTPS"
 #     request_interval: 30
 #     failure_threshold: 3
 #     port: 443
 #     resource_path: "/"
 #   - name: "mtls-auth-west"
-#     fqdn: "mtls.auth-west.wallet.prodpaze.earlywarning.io"
+#     fqdn: "mtls.auth-west.wallet.prodsre.earlywarning.io"
 #     protocol_type: "HTTPS"
 #     request_interval: 30
 #     failure_threshold: 3
@@ -312,7 +312,7 @@ dynamodb_tables:
 
 # Kinesis Metrics Monitoring
 kinesis_streams:
-  - name: "prodpaze-usw2-wallet-analytics-kds"
+  - name: "prodsre-usw2-wallet-analytics-kds"
     metrics:
       - metric_name: "GetRecords.Bytes"
         statistic: "Sum"
@@ -350,7 +350,7 @@ kinesis_streams:
         statistic: "Average"
         threshold: 10  # Threshold for throughput exceeded
         comparison_operator: "GreaterThanThreshold"
-  - name: "prodpaze-usw2-wallet-business-event-stream"
+  - name: "prodsre-usw2-wallet-business-event-stream"
     metrics:
       - metric_name: "GetRecords.Bytes"
         statistic: "Sum"
@@ -388,7 +388,7 @@ kinesis_streams:
         statistic: "Average"
         threshold: 10  # Threshold for throughput exceeded
         comparison_operator: "GreaterThanThreshold"
-  - name: "prodpaze-usw2-wallet-event-stream"
+  - name: "prodsre-usw2-wallet-event-stream"
     metrics:
       - metric_name: "GetRecords.Bytes"
         statistic: "Sum"
@@ -426,7 +426,7 @@ kinesis_streams:
         statistic: "Average"
         threshold: 10  # Threshold for throughput exceeded
         comparison_operator: "GreaterThanThreshold"
-  - name: "prodpaze-usw2-wallet-input-stream"
+  - name: "prodsre-usw2-wallet-input-stream"
     metrics:
       - metric_name: "GetRecords.Bytes"
         statistic: "Sum"
@@ -493,11 +493,11 @@ data_quality_lambda:
   subnet_name: "app"
   memory: 512
   timeout: 900
-  security_groups: [ "prodpaze-usw2-infrastructure" ]
+  security_groups: [ "prodsre-usw2-infrastructure" ]
   environment_variables:
     SPLUNK_HEC_TOKEN: c76b71f0-24e8-424a-a716-482ab343bdc9
     SPLUNK_HEC_URL: https://prodtools-splunk-heavy-forwarder.ews.int:8088/services/collector/event
-    SPLUNK_INDEX: aws-prodpaze
+    SPLUNK_INDEX: aws-prodsre
   log_group:
     name: "/aws/lambda/"
     retention_in_days: 90
@@ -513,9 +513,9 @@ data_quality_lambda:
 data_quality_lambda_logs_subscriptions:
   name: "data-quality-logs-splunk-subscription"
   role_arn: null
-  log_group_name: "/aws/lambda/prodpaze-usw2-wallet-data-quality-lambda"
+  log_group_name: "/aws/lambda/prodsre-usw2-wallet-data-quality-lambda"
   filter_pattern: ""
-  # destination_arn: "arn:aws:lambda:us-west-2:289434761907:function:prodpaze-usw2-wallet-sre-lambda-logs-to-splunk-logging"
+  # destination_arn: "arn:aws:lambda:us-west-2:289434761907:function:prodsre-usw2-wallet-sre-lambda-logs-to-splunk-logging"
   distribution: null
 
 ####################  Data Quality Monitoring CIs End ####################
@@ -581,10 +581,10 @@ dashboard_updater_lambda:
   subnet_name: "app"
   memory: 256
   timeout: 60
-  security_groups: [ "prodpaze-usw2-infrastructure" ]
+  security_groups: [ "prodsre-usw2-infrastructure" ]
   environment_variables:
-    DASHBOARD_NAME: "prodpaze-usw2-wallet-wallet-dynamodb_tables_dashboard"
-    SNS_TOPIC_ARN: "arn:aws:sns:us-west-2:475932674827:prodpaze-usw2-wallet-temp_paze_sre_alarms"
+    DASHBOARD_NAME: "prodsre-usw2-wallet-wallet-dynamodb_tables_dashboard"
+    SNS_TOPIC_ARN: "arn:aws:sns:us-west-2:475932674827:prodsre-usw2-wallet-temp_sre_sre_alarms"
     AWS_ACCOUNT_ID: "475932674827" 
 
   log_group:
