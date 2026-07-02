@@ -2,11 +2,11 @@
 
 TERRAFORM_VERSION=1.3.7
 TERRAGRUNT_VERSION=v0.42.7
-TERRAGRUNT_DOWNLOAD_URL=https://jfrog-artifactory.ews.int:443/artifactory/binaries-devops-dev-local/terragrunt/$TERRAGRUNT_VERSION/terragrunt_linux_amd64
+TERRAGRUNT_DOWNLOAD_URL=https://jfrog-artifactory..int:443/artifactory/binaries-devops-dev-local/terragrunt/$TERRAGRUNT_VERSION/terragrunt_linux_amd64
 
-TFENV_REPO_URL=ssh://git@gitlab.ews.int/ceng/TER/tfenv.git
-TERRAFORM_RELEASES_URL=https://jfrog-artifactory.ews.int/artifactory/releases-hashicorp-remote
-TFENV_REMOTE=https://jfrog-artifactory.ews.int/artifactory/releases-hashicorp-remote
+TFENV_REPO_URL=ssh://git@gitlab..int/ceng/TER/tfenv.git
+TERRAFORM_RELEASES_URL=https://jfrog-artifactory..int/artifactory/releases-hashicorp-remote
+TFENV_REMOTE=https://jfrog-artifactory..int/artifactory/releases-hashicorp-remote
 
 function tfenv(){
   if [ ! $(find ~/.tfenv -name tfenv) ]; then
