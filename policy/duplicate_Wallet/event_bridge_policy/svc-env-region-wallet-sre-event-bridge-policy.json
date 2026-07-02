@@ -1,0 +1,15 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": "lambda:InvokeFunction",
+            "Resource": "arn:aws:lambda:${region}:${account}:function:${env}-${region_short_name}-wallet-sre-observability-check-lambda",
+			 "Condition": {
+                "StringEqualsIfExists": {
+                    "aws:sourceVpce": "${vpc_endpoint_logs}"
+                }
+            }
+        }
+    ]
+}

@@ -1,0 +1,192 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": "logs:CreateLogGroup",
+            "Resource": "arn:aws:logs:${region}:${account}:*",
+            "Condition": {
+                "StringEqualsIfExists": {
+                    "aws:sourceVpce": "${vpc_endpoint_logs}"
+                }
+            }
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "logs:CreateLogStream",
+                "logs:PutLogEvents"
+            ],
+            "Resource": [
+                "arn:aws:logs:${region}:${account}:log-group:/aws/lambda/${env}-${region_short_name}-wallet-data-quality-lambda:*"
+            ],
+            "Condition": {
+                "StringEqualsIfExists": {
+                    "aws:sourceVpce": "${vpc_endpoint_logs}"
+                }
+            }
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "s3:*",
+                "s3-object-lambda:*"
+            ],
+            "Resource": [
+                "*"
+            ],
+            "Condition": {
+                "StringEqualsIfExists": {
+                    "aws:sourceVpce": "${vpc_endpoint_s3}"
+                }
+            }
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "athena:StartQueryExecution",
+                "athena:GetQueryResults",
+                "athena:GetNamedQuery",
+                "athena:ListQueryExecutions",
+                "athena:StopQueryExecution",
+                "athena:GetQueryResultsStream",
+                "athena:GetQueryExecution"
+            ],
+            "Resource": [
+                "*"
+            ],
+            "Condition": {
+                "StringEqualsIfExists": {
+                    "aws:sourceVpce": "${vpc_endpoint_athena}"
+                }
+            }
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "athena:GetDataCatalog"
+            ],
+            "Resource": [
+                "*"
+            ],
+            "Condition": {
+                "StringEqualsIfExists": {
+                    "aws:sourceVpce": "${vpc_endpoint_athena}"
+                }
+            }
+        },
+        {
+            "Sid": "BaseGluePermissions",
+            "Effect": "Allow",
+            "Action": [
+                "glue:GetDatabase",
+                "glue:GetDatabases",
+                "glue:GetTable",
+                "glue:GetTables",
+                "glue:GetPartition",
+                "glue:GetPartitions",
+                "glue:BatchGetPartition",
+                "glue:StartColumnStatisticsTaskRun",
+                "glue:GetColumnStatisticsTaskRun",
+                "glue:GetColumnStatisticsTaskRuns",
+                "glue:GetCatalogImportStatus"
+            ],
+            "Resource": [
+                "*"
+            ],
+            "Condition": {
+                "StringEqualsIfExists": {
+                    "aws:sourceVpce": "${vpc_endpoint_glue}"
+                }
+            }
+        },
+        {
+            "Sid": "BaseQueryResultsPermissions",
+            "Effect": "Allow",
+            "Action": [
+                "s3:GetBucketLocation",
+                "s3:GetObject",
+                "s3:ListBucket",
+                "s3:ListBucketMultipartUploads",
+                "s3:ListMultipartUploadParts",
+                "s3:AbortMultipartUpload",
+                "s3:PutObject",
+                "s3:PutBucketPublicAccessBlock"
+            ],
+            "Resource": [
+                "arn:aws:s3:::${env}-${region_short_name}-wallet-wallet-sre-operational-s3/*",
+                "arn:aws:s3:::${env}-${region_short_name}-wallet-wallet-sre-operational-s3",
+                "arn:aws:s3:::${env}-${region_short_name}-wallet-wallet-sre-query-results-s3/*",
+                "arn:aws:s3:::${env}-${region_short_name}-wallet-wallet-sre-query-results-s3",
+                "arn:aws:s3:::${env}-${region_short_name}-wallet-analytics-curated-s3/*",
+                "arn:aws:s3:::${env}-${region_short_name}-wallet-analytics-curated-s3"
+            ],
+            "Condition": {
+                "StringEqualsIfExists": {
+                    "aws:sourceVpce": "${vpc_endpoint_s3}"
+                }
+            }
+        },
+        {
+            "Sid": "BaseS3BucketPermissions",
+            "Effect": "Allow",
+            "Action": [
+                "s3:ListBucket",
+                "s3:GetBucketLocation",
+                "s3:ListAllMyBuckets"
+            ],
+            "Resource": [
+                "*"
+            ],
+            "Condition": {
+                "StringEqualsIfExists": {
+                    "aws:sourceVpce": "${vpc_endpoint_s3}"
+                }
+            }
+        },
+        {
+            "Sid": "EnableKeyPermission",
+            "Effect": "Allow",
+            "Action": [
+                "kms:GenerateDataKey",
+                "kms:DescribeKey",
+                "kms:Encrypt",
+                "kms:Decrypt"
+            ],
+            "Resource": [
+                "arn:aws:kms:${region}:${account}:key/*"
+            ],
+            "Condition": {
+                "ForAllValues:StringEqualsIfExists": {
+                    "kms:ResourceAliases": [
+                        "alias/${env}-${region_short_name}-wallet-wallet-sre-operational-s3-bucket-key",
+                        "alias/${env}-${region_short_name}-catalog-encryption-key-alias",
+                        "alias/${env}-${region_short_name}-wallet-analytics-curated-key-alias",
+                        "alias/${env}-${region_short_name}-wallet-wallet-sre-query-results-s3-bucket-key",
+                        "alias/aws-kms-analytics-temp-alias"
+                    ]
+                },
+                "StringEqualsIfExists": {
+                    "aws:sourceVpce": "${vpc_endpoint_kms}"
+                }
+            }
+        },
+        {
+            "Sid": "BaseCloudWatchPermissions",
+            "Effect": "Allow",
+            "Action": [
+                "cloudwatch:PutMetricAlarm",
+                "cloudwatch:DescribeAlarms",
+                "cloudwatch:GetMetricData"
+            ],
+            "Resource": [
+                "*"
+            ],
+            "Condition": {
+                "StringEqualsIfExists": {
+                    "aws:sourceVpce": "${vpc_endpoint_monitoring}"
+                }
+            }
+        }
+    ]
+}

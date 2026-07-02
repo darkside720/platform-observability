@@ -1,0 +1,83 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": "logs:CreateLogGroup",
+      "Resource": "arn:aws:logs:${region}:${account}:*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+      ],
+      "Resource": "arn:aws:logs:${region}:${account}:log-group:/aws/lambda/${env}-${region_short_name}-wallet-sre-dashboard-updater:*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "cloudwatch:PutDashboard",
+        "cloudwatch:GetDashboard",
+        "cloudwatch:DescribeAlarms",
+        "cloudwatch:GetMetricData",
+        "cloudwatch:ListMetrics"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "dynamodb:ListTables",
+        "dynamodb:DescribeTable",
+        "dynamodb:ListTagsOfResource"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "kinesis:ListStreams",
+        "kinesis:DescribeStream",
+        "kinesis:ListTagsForStream"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": "sns:Publish",
+      "Resource": "arn:aws:sns:${region}:${account}:${env}-${region_short_name}-wallet-temp_paze_sre_alarms"
+    },
+    {
+      "Effect": "Allow",
+      "Action": "s3:GetObject",
+      "Resource": [
+        "arn:aws:s3:::${env}-${region_short_name}-wallet-wallet-sre-operational-s3/dashboard-sre/dashboard_ddb.tpl"
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": "s3:PutObject",
+      "Resource": "arn:aws:s3:::${env}-${region_short_name}-wallet-wallet-sre-operational-s3/dashboard-sre/dashboard_ddb.tpl"
+    },
+    {
+      "Effect": "Allow",
+      "Action": "lambda:InvokeFunction",
+      "Resource": "arn:aws:lambda:${region}:${account}:function:dashboard-updater"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+          "ec2:CreateNetworkInterface",
+          "ec2:DescribeNetworkInterfaces",
+          "ec2:DeleteNetworkInterface"
+      ],
+      "Resource": "*",
+      "Condition": {
+        "StringEqualsIfExists": {
+           "aws:sourceVpc": "${vpc_id}"
+         }
+       }
+    }
+  ]
+}

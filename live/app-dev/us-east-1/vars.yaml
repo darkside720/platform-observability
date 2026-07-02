@@ -1,0 +1,346 @@
+---
+some_value: null
+
+dynamodb_tables:
+  dev-mesh-org-ddb:
+    ConsumedReadCapacityUnits: 200
+    ConsumedWriteCapacityUnits: 180
+    ThrottledRequests: 20
+    ReadThrottleEvents: 8
+    WriteThrottleEvents: 8
+
+  dev-mesh-wallet-merchants-ddb:
+    ConsumedReadCapacityUnits: 130
+    ConsumedWriteCapacityUnits: 140
+    ThrottledRequests: 18
+    ReadThrottleEvents: 9
+    WriteThrottleEvents: 9
+
+  dev-mesh-wallet-salt-ddb:
+    ConsumedReadCapacityUnits: 90
+    ConsumedWriteCapacityUnits: 100
+    ThrottledRequests: 11
+    ReadThrottleEvents: 6
+    WriteThrottleEvents: 6
+
+  # Newly added tables
+  dev-wallet-merchant-fls-qualification-ddb:
+    ConsumedReadCapacityUnits: 100
+    ConsumedWriteCapacityUnits: 120
+    ThrottledRequests: 12
+    ReadThrottleEvents: 5
+    WriteThrottleEvents: 5
+
+  dev-wallet-merchant-network-name-ddb:
+    ConsumedReadCapacityUnits: 110
+    ConsumedWriteCapacityUnits: 130
+    ThrottledRequests: 14
+    ReadThrottleEvents: 6
+    WriteThrottleEvents: 6
+
+  dev-wallet-merchant-network-mid-ddb:
+    ConsumedReadCapacityUnits: 90
+    ConsumedWriteCapacityUnits: 100
+    ThrottledRequests: 10
+    ReadThrottleEvents: 4
+    WriteThrottleEvents: 4
+  
+  dev-wallet-fls-eligible-transactions-ddb:
+    ConsumedReadCapacityUnits: 90
+    ConsumedWriteCapacityUnits: 100
+    ThrottledRequests: 10
+    ReadThrottleEvents: 4
+    WriteThrottleEvents: 4
+
+  dev-wallet-merchant-key-ddb:
+    ConsumedReadCapacityUnits: 85
+    ConsumedWriteCapacityUnits: 95
+    ThrottledRequests: 9
+    ReadThrottleEvents: 3
+    WriteThrottleEvents: 3
+
+  dev-wallet-mobile-checkout-sessions-ddb:
+    ConsumedReadCapacityUnits: 100
+    ConsumedWriteCapacityUnits: 120
+    ThrottledRequests: 12
+    ReadThrottleEvents: 5
+    WriteThrottleEvents: 5
+
+  # Newly added tables
+  dev-wallet-device-attempts-ddb:
+    ConsumedReadCapacityUnits: 100
+    ConsumedWriteCapacityUnits: 120
+    ThrottledRequests: 12
+    ReadThrottleEvents: 5
+    WriteThrottleEvents: 5
+
+  dev-wallet-appeals-ddb:
+    ConsumedReadCapacityUnits: 100
+    ConsumedWriteCapacityUnits: 120
+    ThrottledRequests: 12
+    ReadThrottleEvents: 5
+    WriteThrottleEvents: 5
+
+  dev-wallet-bank-claims-ddb:
+    ConsumedReadCapacityUnits: 100
+    ConsumedWriteCapacityUnits: 120
+    ThrottledRequests: 12
+    ReadThrottleEvents: 5
+    WriteThrottleEvents: 5
+
+  dev-wallet-authentication-events-ddb:
+    ConsumedReadCapacityUnits: 100
+    ConsumedWriteCapacityUnits: 120
+    ThrottledRequests: 12
+    ReadThrottleEvents: 5
+    WriteThrottleEvents: 5
+
+  dev-wallet-verification-codes-ddb:
+    ConsumedReadCapacityUnits: 100
+    ConsumedWriteCapacityUnits: 120
+    ThrottledRequests: 12
+    ReadThrottleEvents: 5
+    WriteThrottleEvents: 5
+
+  dev-wallet-wms-sessions-ddb:
+    ConsumedReadCapacityUnits: 100
+    ConsumedWriteCapacityUnits: 120
+    ThrottledRequests: 12
+    ReadThrottleEvents: 5
+    WriteThrottleEvents: 5
+
+  dev-wallet-terms-ddb:
+    ConsumedReadCapacityUnits: 100
+    ConsumedWriteCapacityUnits: 120
+    ThrottledRequests: 12
+    ReadThrottleEvents: 5
+    WriteThrottleEvents: 5
+
+  dev-wallet-fraud-transaction-summary-ddb:
+    ConsumedReadCapacityUnits: 100
+    ConsumedWriteCapacityUnits: 120
+    ThrottledRequests: 12
+    ReadThrottleEvents: 5
+    WriteThrottleEvents: 5
+
+  dev-wallet-fraud-transactions-ddb:
+    ConsumedReadCapacityUnits: 100
+    ConsumedWriteCapacityUnits: 120
+    ThrottledRequests: 12
+    ReadThrottleEvents: 5
+    WriteThrottleEvents: 5
+
+  dev-wallet-identifier-ddb:
+    ConsumedReadCapacityUnits: 100
+    ConsumedWriteCapacityUnits: 120
+    ThrottledRequests: 12
+    ReadThrottleEvents: 5
+    WriteThrottleEvents: 5
+
+
+# Cloudwatch Route53 Health Checks
+r53_health_checks:
+  - name: "b2b-east"
+    fqdn: "b2b-east.wallet.dev.earlywarning.io"
+    protocol_type: "HTTPS"
+    request_interval: 30
+    failure_threshold: 3
+    port: 443
+    resource_path: "/"
+  - name: "mtls-issuer-east"
+    fqdn: "mtls.issuer-east.wallet.dev.earlywarning.io"
+    protocol_type: "HTTPS"
+    request_interval: 30
+    failure_threshold: 3
+    port: 443
+    resource_path: "/"
+  - name: "issuer-east"
+    fqdn: "issuer-east.wallet.dev.earlywarning.io"
+    protocol_type: "HTTPS"
+    request_interval: 30
+    failure_threshold: 3
+    port: 443
+    resource_path: "/"
+  - name: "auth-east"
+    fqdn: "auth-east.wallet.dev.earlywarning.io"
+    protocol_type: "HTTPS"
+    request_interval: 30
+    failure_threshold: 3
+    port: 443
+    resource_path: "/"
+  - name: "mywallet-management-east"
+    fqdn: "mywallet-management-east.wallet.dev.earlywarning.io"
+    protocol_type: "HTTPS"
+    request_interval: 30
+    failure_threshold: 3
+    port: 443
+    resource_path: "/"
+  - name: "mtls-b2b-east"
+    fqdn: "mtls.b2b-east.wallet.dev.earlywarning.io"
+    protocol_type: "HTTPS"
+    request_interval: 30
+    failure_threshold: 3
+    port: 443
+    resource_path: "/"
+  - name: "mtls-auth-east"
+    fqdn: "mtls.auth-east.wallet.dev.earlywarning.io"
+    protocol_type: "HTTPS"
+    request_interval: 30
+    failure_threshold: 3
+    port: 443
+    resource_path: "/"
+
+# Kinesis Metrics Monitoring
+kinesis_streams:
+  - name: "dev-use1-wallet-analytics-kds"
+    metrics:
+      - metric_name: "GetRecords.Bytes"
+        statistic: "Sum"
+        threshold: 5000000  # Threshold in bytes
+        comparison_operator: "GreaterThanThreshold"
+      - metric_name: "GetRecords.IteratorAgeMilliseconds"
+        statistic: "Maximum"
+        threshold: 300000  # Threshold in milliseconds (5 minutes)
+        comparison_operator: "GreaterThanThreshold"
+      - metric_name: "GetRecords.Latency"
+        statistic: "Average"
+        threshold: 500  # Threshold in milliseconds
+        comparison_operator: "GreaterThanThreshold"
+      - metric_name: "GetRecords.Records"
+        statistic: "Sum"
+        threshold: 100000  # Threshold in number of records
+        comparison_operator: "GreaterThanThreshold"
+      - metric_name: "PutRecords.FailedRecords"
+        statistic: "Sum"
+        threshold: 100  # Threshold in number of failed records
+        comparison_operator: "GreaterThanThreshold"
+      - metric_name: "PutRecords.TotalRecords"
+        statistic: "Sum"
+        threshold: 500000  # Threshold in total number of records
+        comparison_operator: "GreaterThanThreshold"
+      - metric_name: "PutRecords.FailedRecords.Percent"
+        statistic: "Average"
+        threshold: 5  # Threshold in percentage of failed records
+        comparison_operator: "GreaterThanThreshold"
+      - metric_name: "PutRecords.ThrottleRecords"
+        statistic: "Sum"
+        threshold: 30  # Threshold for throttled records
+        comparison_operator: "GreaterThanThreshold"
+      - metric_name: "WriteProvisionedThroughputExceeded"
+        statistic: "Average"
+        threshold: 5  # Threshold for throughput exceeded
+        comparison_operator: "GreaterThanThreshold"
+  - name: "dev-use1-wallet-business-event-stream"
+    metrics:
+      - metric_name: "GetRecords.Bytes"
+        statistic: "Sum"
+        threshold: 5000000  # Threshold in bytes
+        comparison_operator: "GreaterThanThreshold"
+      - metric_name: "GetRecords.IteratorAgeMilliseconds"
+        statistic: "Maximum"
+        threshold: 300000  # Threshold in milliseconds (5 minutes)
+        comparison_operator: "GreaterThanThreshold"
+      - metric_name: "GetRecords.Latency"
+        statistic: "Average"
+        threshold: 500  # Threshold in milliseconds
+        comparison_operator: "GreaterThanThreshold"
+      - metric_name: "GetRecords.Records"
+        statistic: "Sum"
+        threshold: 100000  # Threshold in number of records
+        comparison_operator: "GreaterThanThreshold"
+      - metric_name: "PutRecords.FailedRecords"
+        statistic: "Sum"
+        threshold: 100  # Threshold in number of failed records
+        comparison_operator: "GreaterThanThreshold"
+      - metric_name: "PutRecords.TotalRecords"
+        statistic: "Sum"
+        threshold: 500000  # Threshold in total number of records
+        comparison_operator: "GreaterThanThreshold"
+      - metric_name: "PutRecords.FailedRecords.Percent"
+        statistic: "Average"
+        threshold: 5  # Threshold in percentage of failed records
+        comparison_operator: "GreaterThanThreshold"
+      - metric_name: "PutRecords.ThrottleRecords"
+        statistic: "Sum"
+        threshold: 30  # Threshold for throttled records
+        comparison_operator: "GreaterThanThreshold"
+      - metric_name: "WriteProvisionedThroughputExceeded"
+        statistic: "Average"
+        threshold: 5  # Threshold for throughput exceeded
+        comparison_operator: "GreaterThanThreshold"
+  - name: "dev-use1-wallet-event-stream"
+    metrics:
+      - metric_name: "GetRecords.Bytes"
+        statistic: "Sum"
+        threshold: 5000000  # Threshold in bytes
+        comparison_operator: "GreaterThanThreshold"
+      - metric_name: "GetRecords.IteratorAgeMilliseconds"
+        statistic: "Maximum"
+        threshold: 300000  # Threshold in milliseconds (5 minutes)
+        comparison_operator: "GreaterThanThreshold"
+      - metric_name: "GetRecords.Latency"
+        statistic: "Average"
+        threshold: 500  # Threshold in milliseconds
+        comparison_operator: "GreaterThanThreshold"
+      - metric_name: "GetRecords.Records"
+        statistic: "Sum"
+        threshold: 100000  # Threshold in number of records
+        comparison_operator: "GreaterThanThreshold"
+      - metric_name: "PutRecords.FailedRecords"
+        statistic: "Sum"
+        threshold: 100  # Threshold in number of failed records
+        comparison_operator: "GreaterThanThreshold"
+      - metric_name: "PutRecords.TotalRecords"
+        statistic: "Sum"
+        threshold: 500000  # Threshold in total number of records
+        comparison_operator: "GreaterThanThreshold"
+      - metric_name: "PutRecords.FailedRecords.Percent"
+        statistic: "Average"
+        threshold: 5  # Threshold in percentage of failed records
+        comparison_operator: "GreaterThanThreshold"
+      - metric_name: "PutRecords.ThrottleRecords"
+        statistic: "Sum"
+        threshold: 30  # Threshold for throttled records
+        comparison_operator: "GreaterThanThreshold"
+      - metric_name: "WriteProvisionedThroughputExceeded"
+        statistic: "Average"
+        threshold: 5  # Threshold for throughput exceeded
+        comparison_operator: "GreaterThanThreshold"
+  - name: "dev-use1-wallet-input-stream"
+    metrics:
+      - metric_name: "GetRecords.Bytes"
+        statistic: "Sum"
+        threshold: 5000000  # Threshold in bytes
+        comparison_operator: "GreaterThanThreshold"
+      - metric_name: "GetRecords.IteratorAgeMilliseconds"
+        statistic: "Maximum"
+        threshold: 300000  # Threshold in milliseconds (5 minutes)
+        comparison_operator: "GreaterThanThreshold"
+      - metric_name: "GetRecords.Latency"
+        statistic: "Average"
+        threshold: 500  # Threshold in milliseconds
+        comparison_operator: "GreaterThanThreshold"
+      - metric_name: "GetRecords.Records"
+        statistic: "Sum"
+        threshold: 100000  # Threshold in number of records
+        comparison_operator: "GreaterThanThreshold"
+      - metric_name: "PutRecords.FailedRecords"
+        statistic: "Sum"
+        threshold: 100  # Threshold in number of failed records
+        comparison_operator: "GreaterThanThreshold"
+      - metric_name: "PutRecords.TotalRecords"
+        statistic: "Sum"
+        threshold: 500000  # Threshold in total number of records
+        comparison_operator: "GreaterThanThreshold"
+      - metric_name: "PutRecords.FailedRecords.Percent"
+        statistic: "Average"
+        threshold: 5  # Threshold in percentage of failed records
+        comparison_operator: "GreaterThanThreshold"
+      - metric_name: "PutRecords.ThrottleRecords"
+        statistic: "Sum"
+        threshold: 30  # Threshold for throttled records
+        comparison_operator: "GreaterThanThreshold"
+      - metric_name: "WriteProvisionedThroughputExceeded"
+        statistic: "Average"
+        threshold: 5  # Threshold for throughput exceeded
+        comparison_operator: "GreaterThanThreshold"

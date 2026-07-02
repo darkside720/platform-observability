@@ -1,0 +1,24 @@
+---
+some_value: null
+
+dynamodb_tables:
+  uat-mesh-org-ddb:
+    ConsumedReadCapacityUnits: 80
+    ConsumedWriteCapacityUnits: 90
+    ThrottledRequests: 10
+    ReadThrottleEvents: 4
+    WriteThrottleEvents: 4
+
+  uat-mesh-wallet-merchants-ddb:
+    ConsumedReadCapacityUnits: 130
+    ConsumedWriteCapacityUnits: 140
+    ThrottledRequests: 18
+    ReadThrottleEvents: 9
+    WriteThrottleEvents: 9
+
+  uat-mesh-wallet-salt-ddb:
+    ConsumedReadCapacityUnits: 90
+    ConsumedWriteCapacityUnits: 100
+    ThrottledRequests: 11
+    ReadThrottleEvents: 6
+    WriteThrottleEvents: 6

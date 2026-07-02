@@ -1,0 +1,295 @@
+---
+# Bucket for SRE monitoring
+s3_sre_operational_bucket:
+  name: wallet-sre-operational-s3
+  versioning: true
+  kms: null
+  lifecycle_configuration:
+    transition_standard_ia_days: 30
+    transition_glacier_days: 90
+    expiration_days: 300
+  cloudfront_oai_id: ""
+  management_account_id: 289645091377
+
+#s3_replica_sre_operational_bucket_key: null
+
+s3_sre_operational_bucket_key:
+  description: "wallet-sre-operational-s3-assets-key"
+  deletion_window_in_days: 10
+  alias_name: "uat-usw2-wallet-wallet-sre-operational-s3-bucket-key"
+  multi_region: true
+  policy_shared: false
+
+# Bucket for Athena Query result
+s3_duplicate_wallet_query_results_bucket:
+  name: wallet-sre-query-results-s3
+  versioning: true
+  kms: null
+  lifecycle_configuration:
+    transition_standard_ia_days: 30
+    transition_glacier_days: 90
+    expiration_days: 300
+  cloudfront_oai_id: ""
+  management_account_id: 289645091377
+
+#s3_replica_duplicate_wallet_query_results_bucket_key: null
+
+
+s3_duplicate_wallet_query_results_bucket_key:
+  description: "wallet-sre-query-results-s3-bucket-key"
+  deletion_window_in_days: 10
+  alias_name: "uat-usw2-wallet-wallet-sre-query-results-s3-bucket-key"
+  multi_region: true
+  policy_shared: false
+
+# lambda to verify duplicate records
+observability_check_lambda:
+  name: "sre-observability-check-lambda"
+  description: "observability-check"
+  runtime: "python3.10"
+  handler: "observability_lambda.lambda_handler"
+  #filename: "observability_lambda.zip"
+  subnet_name: "app"
+  memory: 512
+  timeout: 900
+  security_groups: [ "uat-usw2-infrastructure" ]
+  environment_variables:
+    SPLUNK_HEC_TOKEN: c76b71f0-24e8-424a-a716-482ab343bdc9
+    SPLUNK_HEC_URL: https://prodtools-splunk-heavy-forwarder.ews.int:8088/services/collector/event
+    SPLUNK_INDEX: aws-uat
+  log_group:
+    name: "/aws/lambda/"
+    retention_in_days: 90
+    skip_destroy: false
+    kms_key_id: null
+  role:
+    name: sre-observability-lambda-execution-role
+    description: "sre lambda observability check execution role"
+    iam_policy_s3_keys: [ "svc-uat-usw2-wallet-sre-observability-check-lambda-policy" ]
+    assume_role_json_file: svc-uat-usw2-wallet-sre-observability-check-lambda-assume-policy
+    additional_policy_arns: [ "arn:aws:iam::aws:policy/AmazonEC2FullAccess" ]
+
+# lambda to collect the logs and stream to splunk tool
+logsmonitor_lambda:
+  name: "sre-lambda-logs-to-splunk-logging"
+  description: "wallet-sre-lambda-logs-to-splunk-logging"
+  runtime: "nodejs16.x"
+  handler: "index.handler"
+  #filename: "lambda_index.zip"
+  subnet_name: "app"
+  memory: 512
+  timeout: 900
+  security_groups: [ "uat-usw2-infrastructure" ]
+  environment_variables:
+    SPLUNK_HEC_TOKEN: c76b71f0-24e8-424a-a716-482ab343bdc9
+    SPLUNK_HEC_URL: https://prodtools-splunk-heavy-forwarder.ews.int:8088/services/collector/event
+    SPLUNK_INDEX: aws-uat
+  log_group:
+    name: "/aws/lambda/"
+    retention_in_days: 90
+    skip_destroy: false
+    kms_key_id: null
+  role:
+    name: sre-lambda-splunk-logging-execution-role
+    description: "sre lambda splunk logging execution role"
+    iam_policy_s3_keys: [ "svc-uat-usw2-wallet-sre-lambda-logs-policy" ]
+    assume_role_json_file: svc-uat-usw2-wallet-sre-lambda-logs-assume-policy
+    additional_policy_arns: [ "arn:aws:iam::aws:policy/AmazonEC2FullAccess" ]
+
+logsmonitor_lambdaoutput_subscriptions:
+  name: "sre-lambda-output-splunk-logging"
+  role_arn: null
+  log_group_name: "/aws/lambda/uat-usw2-wallet-sre-observability-check-lambda"
+  filter_pattern: ""
+  # destination_arn: "arn:aws:lambda:us-west-2:289434761907:function:uat-usw2-wallet-sre-lambda-logs-to-splunk-logging"
+  distribution: null
+
+# Event Bridge details
+
+
+cloudwatch_event_iam_sre_role:
+  name: "sre-event-bridge-role"
+  description: "sre wallet event bridge role"
+  iam_policy_s3_keys:
+    - "svc-uat-usw2-wallet-sre-event-bridge-policy"
+  assume_role_json_file: "svc-uat-usw2-wallet-sre-event-bridge-assume-policy"
+
+eventbridge-scheduler-sre:
+  name: "sre-observability-check-eb-rule"
+  schedule_expression: "cron(0 * ? * * *)"
+  schedule_expression_timezone: "America/Phoenix"
+  flexible_time_window:
+    mode: "OFF"
+  # target:
+  #   arn: "arn:aws:lambda:us-west-2:289434761907:function:uat-usw2-wallet-sre-observability-check-lambda"
+  #   role_arn: "arn:aws:iam::289434761907:role/svc-uat-usw2-wallet-sre-event-bridge-role"
+  #   input": "{\"FunctionName\": \"arn:aws:lambda:us-west-2:289434761907:function:uat-usw2-wallet-sre-observability-check-lambda\",  \"InvocationType\": \"Event\", \"Payload\": \"\"}"
+
+some_value: null
+
+dynamodb_tables:
+  uat-mesh-org-ddb:
+    ConsumedReadCapacityUnits: 80
+    ConsumedWriteCapacityUnits: 90
+    ThrottledRequests: 10
+    ReadThrottleEvents: 4
+    WriteThrottleEvents: 4
+
+  uat-mesh-wallet-merchants-ddb:
+    ConsumedReadCapacityUnits: 130
+    ConsumedWriteCapacityUnits: 140
+    ThrottledRequests: 18
+    ReadThrottleEvents: 9
+    WriteThrottleEvents: 9
+
+  uat-mesh-wallet-salt-ddb:
+    ConsumedReadCapacityUnits: 90
+    ConsumedWriteCapacityUnits: 100
+    ThrottledRequests: 11
+    ReadThrottleEvents: 6
+    WriteThrottleEvents: 6
+
+####################  Data Quality Monitoring CIs Start ####################
+
+# Data Quality Event Bridge IAM Role
+data_quality_cloudwatch_event_bridge_scheduler_role:
+  name: "data-quality-event-bridge-role"
+  description: "wallet analytics data quality event bridge role"
+  iam_policy_s3_keys: [ "svc-wallet-data-quality-event-bridge-policy" ]
+  assume_role_json_file: "svc-wallet-data-quality-event-bridge-assume-policy"
+
+# Data Quality Event Bridge Scheduler
+data_quality_event_bridge_scheduler:
+  name: "data-quality-event-bridge-scheduler"
+  schedule_expression: "cron(0 * ? * * *)"
+  schedule_expression_timezone: "America/Phoenix"
+  flexible_time_window:
+    mode: "OFF"
+
+# Data Quality Lambda details
+data_quality_lambda:
+  name: "data-quality-lambda"
+  description: "analytics data quality lambda"
+  runtime: "python3.10"
+  handler: "data_quality_lambda.lambda_handler"
+  #filename: "data_quality_lambda.zip"
+  subnet_name: "app"
+  memory: 512
+  timeout: 900
+  security_groups: [ "uat-usw2-infrastructure" ]
+  environment_variables:
+    SPLUNK_HEC_TOKEN: 02cc5e3d-c334-432e-bd7a-a401575f050c
+    SPLUNK_HEC_URL: https://corptools-splunk-heavy-forwarder.ews.int:8088/services/collector/event
+    SPLUNK_INDEX: aws-uat
+  log_group:
+    name: "/aws/lambda/"
+    retention_in_days: 90
+    skip_destroy: false
+    kms_key_id: null
+  role:
+    name: data-quality-lambda-execution-role
+    description: "data quality lambda execution role"
+    iam_policy_s3_keys: [ "svc-wallet-data-quality-lambda-policy" ]
+    assume_role_json_file: svc-wallet-data-quality-lambda-assume-policy
+    additional_policy_arns: [ "arn:aws:iam::aws:policy/AmazonEC2FullAccess" ]
+
+data_quality_lambda_logs_subscriptions:
+  name: "data-quality-logs-splunk-subscription"
+  role_arn: null
+  log_group_name: "/aws/lambda/uat-usw2-wallet-data-quality-lambda"
+  filter_pattern: ""
+  # destination_arn: "arn:aws:lambda:us-west-2:289434761907:function:uat-usw2-wallet-sre-lambda-logs-to-splunk-logging"
+  distribution: null
+
+####################  Data Quality Monitoring CIs End ####################
+
+####################  SRE Cloudwatch Alerts start ####################
+
+sre_cloudwatch_alert:
+  athena_metric_processed_bytes_alarm: 
+    name: "athena-metric-processed-bytes-alarm"
+    alarm_description: "Alaram when Athena ProcessBytes exceeds 10GB in 5 minutes"
+    severity: "Critical"
+    comparison_operator: "GreaterThanOrEqualToThreshold"
+    evaluation_periods: 1
+    metric_name: "ProcessedBytes"
+    namespace: "AWS/Athena"
+    period: 300
+    statistic: "Sum"
+    threshold: 10737418240
+    unit: "Bytes"
+    dimensions:
+     "WorkGroup": "primary"
+  athena_metric_engine_execution_time_alarm: 
+    name: "athena-metric-engine-execution-time-alarm"
+    alarm_description: "Alaram when Athena query took to run more than 20 minutes"
+    severity: "Critical"
+    comparison_operator: "GreaterThanOrEqualToThreshold"
+    evaluation_periods: 1
+    metric_name: "EngineExecutionTime"
+    namespace: "AWS/Athena"
+    period: 60
+    statistic: "Average"
+    threshold: 1200
+    unit: "Seconds"
+    dimensions:
+     "WorkGroup": "primary"    
+
+####################  SRE Cloudwatch Alerts start ####################
+
+## Cloudwatch Dashboard Updater
+####################  Dashboard Updater Lambda Start ####################
+
+# Event Bridge IAM Role for Lambda
+dashboard_updater_event_bridge_scheduler_role:
+  name: "dashboard-updater-event-bridge-role"
+  description: "IAM Role for scheduling dashboard updater Lambda"
+  iam_policy_s3_keys: [ "svc-wallet-sre-dashboard-event-bridge-policy" ]
+  assume_role_json_file: "svc-wallet-dashboard-updater-event-bridge-assume-policy"
+
+# Event Bridge Scheduler for Lambda
+dashboard_updater_event_bridge_scheduler:
+  name: "dashboard-updater-event-bridge-scheduler"
+  schedule_expression: "cron(0 0 ? * 2 *)"  # Runs every Monday at 00:00 UTC
+  schedule_expression_timezone: "UTC"
+  flexible_time_window:
+    mode: "OFF"
+
+# Lambda Configuration
+dashboard_updater_lambda:
+  name: "sre-dashboard-updater"
+  description: "Lambda function to update CloudWatch dashboard dynamically"
+  runtime: "python3.9"
+  handler: "lambda_function.lambda_handler"
+  subnet_name: "app"
+  memory: 256
+  timeout: 60
+  security_groups: [ "uat-usw2-infrastructure" ]
+  environment_variables:
+    DASHBOARD_NAME: "uat-usw2-wallet-wallet-dynamodb_tables_dashboard"
+    SNS_TOPIC_ARN: "arn:aws:sns:us-west-2:289434761907:uat-usw2-wallet-temp_paze_sre_alarms"
+    AWS_ACCOUNT_ID: "289434761907" 
+
+  log_group:
+    name: "/aws/lambda/dashboard-updater"
+    retention_in_days: 90
+    skip_destroy: false
+    kms_key_id: null
+
+  role:
+    name: "dashboard-updater-lambda-execution-role"
+    description: "IAM Role for dashboard updater Lambda"
+    iam_policy_s3_keys: [ 
+      "svc-wallet-dashboard-updater-policy"
+      ##"svc-env-region-wallet-sre-dashboard-updater-policy"
+    ]
+    assume_role_json_file: "svc-wallet-dashboard-updater-assume-policy"
+
+dashboard_updater_lambda_logs_subscriptions:
+  name: "dashboard-updater-logs-subscription"
+  role_arn: null
+  log_group_name: "/aws/lambda/dashboard-updater"
+  filter_pattern: ""
+  distribution: null
+
+####################  Dashboard Updater Lambda End ####################
